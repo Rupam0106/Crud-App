@@ -8,12 +8,11 @@ const port = process.env.PORT || 4000;
 //connect the database
 connectDatabase();
 
-if (process.env.NODE_ENV === "production") {
-  app.get("/", (req, res) => {
-    app.use(express.static(path.resolve(__dirname, "build")));
-    res.sendFile(path.resolve(__dirname, "build", "index.html"));
-  });
-}
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 //listen the port
 const server = app.listen(port, (req, res) => {
